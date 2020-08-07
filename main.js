@@ -11,22 +11,22 @@ Storage.prototype.getObj = function (key) {
 
 
 //For prototype
-function changeStateConstructor() {
+// function changeStateConstructor() {
 
-}
-changeStateConstructor.prototype.change = function () {
-    if (this.read === "read") {
-        this.read = "not read";
-        render();
-    } else {
-        this.read = "read";
-        render();
-    }
-}
+// }
+// changeStateConstructor.prototype.change = function () {
+//     if (this.read === "read") {
+//         this.read = "not read";
+//         render();
+//     } else {
+//         this.read = "read";
+//         render();
+//     }
+// }
 
-changeStateConstructor.prototype.info = function () {
-    return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`);
-}
+// changeStateConstructor.prototype.info = function () {
+//     return (`${this.title} by ${this.author}, ${this.pages} pages, ${this.read}`);
+// }
 
 
 
@@ -36,7 +36,7 @@ function book(title, author, pages, read) {
     this.pages = pages;
     this.read = read;
 }
-book.prototype = Object.create(changeStateConstructor.prototype);
+// book.prototype = Object.create(changeStateConstructor.prototype);
 
 //Checking if Library exists in localStorage
 getLib = localStorage.getObj("SavedLibrary")
@@ -75,6 +75,7 @@ function render() {
             <button onclick="changeState(${i})">Change State</button>`;
         bookList.appendChild(newElement);
     }
+    localStorage.setObj("SavedLibrary", myLibrary)
 }
 
 function pushBook() {
@@ -97,9 +98,15 @@ function deleteBook(bookNumber) {
 }
 
 function changeState(bookNumber) {
-    myLibrary[bookNumber].change();
-    render();
+    if (myLibrary[bookNumber].read === "read") {
+        myLibrary[bookNumber].read = "not read";
+        render();
+    } else {
+        myLibrary[bookNumber].read = "read";
+        render();
+    }
 }
+
 
 function showForm() {
     document.querySelector("#book-form").style.display = "flex";
